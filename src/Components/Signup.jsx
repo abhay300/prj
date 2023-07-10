@@ -1,6 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 const Signup = () => {
+
+    let [arr, setarr] = useState([])
 
     let [name, setname] = useState()
     let [email, setemail] = useState()
@@ -19,10 +21,17 @@ const Signup = () => {
 
         }
 
-        console.log(data)
+        setarr([...arr, data])
+        // console.log(data)
+        // console.log(arr)
 
     }
+
+    useEffect(() => {
+        // console.log(arr)
+    }, [arr])
     return (
+        <>
         <div className='container'>
             <div className='row justify-content-center' >
                 <div className='col-sm-7 mt-5 bg-light shadow p-5'>
@@ -48,12 +57,49 @@ const Signup = () => {
                         <button type="submit" className="btn btn-primary" onClick={FormHandel}>Submit</button>
                     </form>
                 </div>
-
-
             </div>
-
-
         </div>
+
+
+
+        <div className='row justify-content-center mt-5'>
+
+
+{arr.map((items,index)=>{
+    // console.log(items)
+    // console.log(index)
+
+    return(
+
+        <div className='col-sm-3'>
+        
+        <div className='card'>
+        <div className='card-header'>
+        <span>name:</span><span>{items.name}</span>
+        </div>
+        <div className='card-body'>
+        <span>email:</span><span>{items.email}</span>
+        
+        </div>
+        <div className='card-footer'>
+        <span>password:</span><span>{items.password}</span>
+    
+        </div>
+        <div className='card-footer'>
+<button className='btn btn-danger m-1'>Delete</button>    
+<button className='btn btn-info m-1'>edit</button>    
+<button className='btn btn-success m-1'>update</button>    
+        </div>
+        
+        </div>
+        </div>
+
+    )
+})}
+
+       
+        </div>
+        </>
     )
 }
 
