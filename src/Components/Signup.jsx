@@ -4,6 +4,8 @@ const Signup = () => {
 
     let [arr, setarr] = useState([])
 
+    let [storeId, setstoreId] = useState()
+    let [status, setstatus] = useState(false)
     let [name, setname] = useState()
     let [email, setemail] = useState()
     let [password, setpassword] = useState()
@@ -32,9 +34,7 @@ const Signup = () => {
 
     }
 
-    useEffect(() => {
-        // console.log(arr)
-    }, [arr])
+  
     let deluser = (del_index) => {
         console.log(del_index, "userindex")
 
@@ -49,9 +49,11 @@ const Signup = () => {
 
     let edituser = (edit_user) => {
         console.log(edit_user)
+        setstoreId(edit_user)
+        setstatus(true)
 
         let newedit = arr.filter((items, index) => {
-            return     index === edit_user 
+            return index === edit_user
         })
         console.log(newedit)
 
@@ -59,6 +61,27 @@ const Signup = () => {
         setemail(newedit[0].email)
         setpassword(newedit[0].password)
     }
+
+
+    let updateFormHandel = (event) => {
+        event.preventDefault()
+        setstatus(false)
+        arr[storeId].name = name
+        arr[storeId].email = email
+        arr[storeId].password = password
+
+        console.log(arr)
+        setarr(arr)
+        
+        setname("")
+        setemail("")
+        setpassword("")
+        
+    }
+
+    useEffect(() => {
+        setarr(arr)
+    }, [arr])
     return (
         <>
             <div className='container'>
@@ -83,7 +106,9 @@ const Signup = () => {
                                 <input type="password" className="form-control" value={password} onChange={(e) => setpassword(e.target.value)} placeholder="Enter password" />
                             </div>
 
-                            <button type="submit" className="btn btn-primary" onClick={FormHandel}>Submit</button>
+
+                            {status === false ? <button type="submit" className="btn btn-primary" onClick={FormHandel}>Submit</button> : 
+                                <button className="btn btn-success" onClick={updateFormHandel}>update</button>}
                         </form>
                     </div>
                 </div>
